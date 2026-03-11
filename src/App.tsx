@@ -92,7 +92,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex-shrink-0 flex items-center">
-            <img src="../img/Diniz - Logo.png" alt="Óticas Diniz" className="h-10 md:h-16 w-auto object-contain" />
+            <img src="Diniz - Logo.png" alt="Óticas Diniz" className="h-10 md:h-16 w-auto object-contain" />
           </div>
           
           <nav className="hidden md:flex space-x-8 items-center">
