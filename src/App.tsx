@@ -292,7 +292,7 @@ export default function App() {
               >
                 <div className="relative z-10 w-full max-w-lg">
                   <img 
-                    src="/Foto Diniz.png" 
+                    src="/Foto Diniz.webp" 
                     alt="Óculos de Grau Premium" 
                     className="w-full h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
                     referrerPolicy="no-referrer"
