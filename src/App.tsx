@@ -92,7 +92,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex-shrink-0 flex items-center">
-            <img src="/img/Diniz - Logo.png" alt="Óticas Diniz" className="h-10 md:h-16 w-auto object-contain" />
+            <img src="Diniz - Logo.png" alt="Óticas Diniz" className="h-10 md:h-16 w-auto object-contain" />
           </div>
           
           <nav className="hidden md:flex space-x-8 items-center">
@@ -504,7 +504,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-full md:col-span-2">
-              <img src="/img/Diniz - Logo.png" alt="Óticas Diniz" className="h-16 md:h-20 w-auto object-contain mb-6 brightness-0 invert" />
+              <img src="Diniz - Logo.png" alt="Óticas Diniz" className="h-16 md:h-20 w-auto object-contain mb-6 brightness-0 invert" />
               <p className="text-gray-400 max-w-md leading-relaxed">
                 A maior rede de óticas do Brasil, agora com condições exclusivas para Joinville e Araquari. Qualidade, tecnologia e o melhor atendimento para sua visão.
               </p>
