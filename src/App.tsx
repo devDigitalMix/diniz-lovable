@@ -25,11 +25,6 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
-// Constants
-const WHATSAPP_NUMBER = "+15557439674";
-const WHATSAPP_MESSAGE = encodeURIComponent("Olá, tenho interesse na promoção de dois óculos por apenas R$199,00");
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER.replace('+', '')}?text=${WHATSAPP_MESSAGE}`;
-
 const BRANDS = [
   "Ray-Ban", "Oakley", "Prada", "Gucci", "Vogue", "Ana Hickmann", "Grazi", "Carrera"
 ];
@@ -69,7 +64,7 @@ const FAQS = [
 ];
 
 // Components
-const UrgencyBar = () => {
+const UrgencyBar = ({ onOpenContact }: { onOpenContact: () => void }) => {
   return (
     <div className="bg-diniz-red text-white py-3 px-4 text-center font-bold overflow-hidden border-b border-white/10">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
@@ -78,14 +73,13 @@ const UrgencyBar = () => {
           <span className="bg-white text-diniz-red px-2 py-0.5 rounded font-black text-lg">17</span>
           <span className="uppercase tracking-widest text-sm">Vouchers de desconto para usar na loja!</span>
         </div>
-        <a 
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          onClick={onOpenContact}
           className="bg-white text-diniz-red px-6 py-2 rounded-full text-sm font-black hover:bg-gray-100 transition-all uppercase"
         >
           Retirar meu voucher!
-        </a>
+        </button>
       </div>
     </div>
   );
@@ -113,14 +107,13 @@ const Header = ({ onOpenContact }: { onOpenContact: () => void }) => {
             >
               Contato
             </button>
-            <a 
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={onOpenContact}
               className="bg-diniz-red text-white px-6 py-2.5 rounded-full font-bold hover:bg-red-700 transition-all shadow-lg hover:shadow-red-200 flex items-center gap-2"
             >
               Garantir Desconto
-            </a>
+            </button>
           </nav>
 
           <div className="md:hidden">
@@ -154,14 +147,16 @@ const Header = ({ onOpenContact }: { onOpenContact: () => void }) => {
               >
                 Contato
               </button>
-              <a 
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  onOpenContact();
+                }}
                 className="block bg-diniz-red text-white text-center px-6 py-3 rounded-xl font-bold"
               >
                 Garantir Desconto
-              </a>
+              </button>
             </div>
           </motion.div>
         )}
@@ -298,7 +293,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900">
-      <UrgencyBar />
+      <UrgencyBar onOpenContact={() => setIsContactOpen(true)} />
       <Header onOpenContact={() => setIsContactOpen(true)} />
 
       <main>
@@ -379,14 +374,13 @@ export default function App() {
                   }}
                   className="flex flex-col gap-4 max-w-sm"
                 >
-                  <a 
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => setIsContactOpen(true)}
                     className="inline-flex items-center justify-center bg-diniz-red text-white px-8 py-4 rounded-full text-lg font-black hover:bg-red-700 transition-all shadow-xl uppercase tracking-wider"
                   >
                     Retirar meu voucher!
-                  </a>
+                  </button>
                   <a 
                     href="#unidades"
                     className="inline-flex items-center justify-center bg-gray-100 text-gray-900 px-8 py-3 rounded-full text-lg font-black hover:bg-gray-200 transition-all shadow-lg uppercase tracking-wider"
@@ -601,15 +595,14 @@ export default function App() {
                 <p className="text-xl opacity-90 mb-12 max-w-2xl mx-auto">
                   Estoque limitado. Garanta agora seu cupom de desconto e venha escolher suas armações favoritas.
                 </p>
-                <a 
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => setIsContactOpen(true)}
                   className="inline-flex items-center gap-3 bg-white text-diniz-red px-10 py-5 rounded-full text-xl font-bold hover:bg-gray-100 transition-all shadow-xl group"
                 >
                   Falar com Consultor no WhatsApp
                   <MessageCircle className="group-hover:rotate-12 transition-transform" />
-                </a>
+                </button>
               </div>
               {/* Decorative circles */}
               <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
@@ -646,9 +639,14 @@ export default function App() {
                 <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-diniz-red transition-colors">
                   <Facebook size={20} />
                 </a>
-                <a href={WHATSAPP_URL} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-diniz-red transition-colors">
+                <button
+                  type="button"
+                  onClick={() => setIsContactOpen(true)}
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-diniz-red transition-colors"
+                  aria-label="Falar no WhatsApp"
+                >
                   <Phone size={20} />
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -659,17 +657,17 @@ export default function App() {
       </footer>
 
       {/* Floating WhatsApp Button */}
-      <a 
-        href={WHATSAPP_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+      <button
+        type="button"
+        onClick={() => setIsContactOpen(true)}
         className="fixed bottom-8 right-8 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center group"
+        aria-label="Falar no WhatsApp"
       >
         <MessageCircle size={32} fill="currentColor" />
         <span className="absolute right-full mr-4 bg-white text-gray-900 px-4 py-2 rounded-xl text-sm font-bold shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
           Fale Conosco
         </span>
-      </a>
+      </button>
 
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </div>
