@@ -207,20 +207,25 @@ const FAQItem = ({ question, answer }: { question: string, answer: string, key?:
 };
 
 const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const toTel = (phone: string, unitName: string) => `https://wa.me/55${phone.replace(/\D/g, "")}?text=Olá, tenho interesse na promoção de dois óculos por apenas R$199,00`;
+  const toWhatsapp = (phone: string, unitName: string) => {
+    const message = encodeURIComponent(
+      `Olá! Tenho interesse na promoção de dois óculos por apenas R$199,00. Quero atendimento da ${unitName}.`
+    );
+    return `https://wa.me/55${phone.replace(/\D/g, "")}?text=${message}`;
+  };
 
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4"
+          className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/60 p-4 sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
         >
           <motion.div
-            className="w-full max-w-xl rounded-3xl bg-white p-6 sm:p-8 shadow-2xl"
+            className="w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl bg-white p-6 sm:p-8 shadow-2xl"
             initial={{ y: 30, opacity: 0, scale: 0.98 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: 20, opacity: 0, scale: 0.98 }}
@@ -247,16 +252,16 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
               </button>
             </div>
 
-            <div className="mt-8 space-y-4">
+            <div className="mt-6 sm:mt-8 space-y-4">
               {CONTACT_UNITS.map((unit) => (
-                <div key={unit.name} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-2xl border border-gray-100 p-4">
+                <div key={unit.name} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 rounded-2xl border border-gray-100 p-4 sm:p-5">
                   <div>
                     <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">{unit.name}</p>
-                    <p className="text-lg font-semibold text-gray-900">{unit.phone}</p>
+                    <p className="text-base sm:text-lg font-semibold text-gray-900">{unit.phone}</p>
                   </div>
                   <a
-                    href={toTel(unit.phone, unit.name)}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-diniz-red px-5 py-3 text-sm font-bold text-white hover:bg-red-700 transition-colors"
+                    href={toWhatsapp(unit.phone, unit.name)}
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-diniz-red px-5 py-4 sm:py-3 text-sm font-bold text-white hover:bg-red-700 transition-colors"
                   >
                     Entrar em Contato
                     <Phone size={16} />
@@ -265,8 +270,8 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
               ))}
             </div>
 
-            <div className="mt-8 rounded-2xl bg-gray-50 p-4 text-sm text-gray-600">
-              Atendimento rápido pelo telefone ou WhatsApp. Escolha a unidade e ligue direto.
+            <div className="mt-6 sm:mt-8 rounded-2xl bg-gray-50 p-4 text-sm text-gray-600">
+              Atendimento rápido pelo WhatsApp. Escolha a unidade e envie sua mensagem.
             </div>
           </motion.div>
         </motion.div>
