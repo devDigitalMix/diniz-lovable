@@ -42,6 +42,13 @@ const UNITS = [
   { name: "Itinga", city: "Araquari", maps: "https://goo.gl/maps/example5" },
 ];
 
+const CONTACT_UNITS = [
+  { name: "UNIDADE CENTRO", phone: "(47) 9259-7505" },
+  { name: "UNIDADE VILA NOVA", phone: "(47) 99182-9311" },
+  { name: "UNIDADE MUELLER", phone: "(47) 9230-6742" },
+  { name: "UNIDADE IRIRIÚ", phone: "(47) 99230-9911" },
+];
+
 const FAQS = [
   {
     question: "Como funciona a promoção?",
@@ -84,7 +91,7 @@ const UrgencyBar = () => {
   );
 };
 
-const Header = () => {
+const Header = ({ onOpenContact }: { onOpenContact: () => void }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -99,6 +106,13 @@ const Header = () => {
             <a href="#promocao" className="text-gray-700 hover:text-diniz-red font-medium transition-colors">Promoção</a>
             <a href="#unidades" className="text-gray-700 hover:text-diniz-red font-medium transition-colors">Unidades</a>
             <a href="#faq" className="text-gray-700 hover:text-diniz-red font-medium transition-colors">FAQ</a>
+            <button
+              type="button"
+              onClick={onOpenContact}
+              className="text-gray-700 hover:text-diniz-red font-medium transition-colors"
+            >
+              Contato
+            </button>
             <a 
               href={WHATSAPP_URL}
               target="_blank"
@@ -130,6 +144,16 @@ const Header = () => {
               <a href="#promocao" onClick={() => setIsMenuOpen(false)} className="block text-lg font-medium text-gray-800 py-2">Promoção</a>
               <a href="#unidades" onClick={() => setIsMenuOpen(false)} className="block text-lg font-medium text-gray-800 py-2">Unidades</a>
               <a href="#faq" onClick={() => setIsMenuOpen(false)} className="block text-lg font-medium text-gray-800 py-2">FAQ</a>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  onOpenContact();
+                }}
+                className="block w-full text-left text-lg font-medium text-gray-800 py-2"
+              >
+                Contato
+              </button>
               <a 
                 href={WHATSAPP_URL}
                 target="_blank"
@@ -182,11 +206,95 @@ const FAQItem = ({ question, answer }: { question: string, answer: string, key?:
   );
 };
 
+const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  const toTel = (phone: string) => `tel:+55${phone.replace(/\D/g, "")}`;
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+        >
+          <motion.div
+            className="w-full max-w-xl rounded-3xl bg-white p-6 sm:p-8 shadow-2xl"
+            initial={{ y: 30, opacity: 0, scale: 0.98 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 20, opacity: 0, scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 160, damping: 20 }}
+            onClick={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-title"
+          >
+            <div className="flex items-start justify-between gap-6">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-gray-400">Contato</p>
+                <h3 id="contact-title" className="text-2xl sm:text-3xl font-bold text-gray-900 mt-2">
+                  Fale com a unidade mais próxima
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={onClose}
+                className="rounded-full p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+                aria-label="Fechar modal"
+              >
+                <X size={22} />
+              </button>
+            </div>
+
+            <div className="mt-8 space-y-4">
+              {CONTACT_UNITS.map((unit) => (
+                <div key={unit.name} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-2xl border border-gray-100 p-4">
+                  <div>
+                    <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">{unit.name}</p>
+                    <p className="text-lg font-semibold text-gray-900">{unit.phone}</p>
+                  </div>
+                  <a
+                    href={toTel(unit.phone)}
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-diniz-red px-5 py-3 text-sm font-bold text-white hover:bg-red-700 transition-colors"
+                  >
+                    Ligar agora
+                    <Phone size={16} />
+                  </a>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 rounded-2xl bg-gray-50 p-4 text-sm text-gray-600">
+              Atendimento rápido pelo telefone ou WhatsApp. Escolha a unidade e ligue direto.
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 export default function App() {
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isContactOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsContactOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [isContactOpen]);
+
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900">
       <UrgencyBar />
-      <Header />
+      <Header onOpenContact={() => setIsContactOpen(true)} />
 
       <main>
         {/* Hero Section */}
@@ -280,6 +388,13 @@ export default function App() {
                   >
                     Ver unidades
                   </a>
+                  <button
+                    type="button"
+                    onClick={() => setIsContactOpen(true)}
+                    className="inline-flex items-center justify-center bg-white text-diniz-red px-8 py-3 rounded-full text-lg font-black border-2 border-diniz-red hover:bg-diniz-red hover:text-white transition-all shadow-lg uppercase tracking-wider"
+                  >
+                    Entrar em contato
+                  </button>
                 </motion.div>
               </motion.div>
 
@@ -550,6 +665,8 @@ export default function App() {
           Fale Conosco
         </span>
       </a>
+
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </div>
   );
 }
