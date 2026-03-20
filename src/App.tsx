@@ -207,7 +207,7 @@ const FAQItem = ({ question, answer }: { question: string, answer: string, key?:
 };
 
 const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const toTel = (phone: string) => `tel:+55${phone.replace(/\D/g, "")}`;
+  const toTel = (phone: string, unitName: string) => `https://wa.me/55${phone.replace(/\D/g, "")}?text=Olá, tenho interesse na promoção de dois óculos por apenas R$199,00`;
 
   return (
     <AnimatePresence>
@@ -255,10 +255,10 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                     <p className="text-lg font-semibold text-gray-900">{unit.phone}</p>
                   </div>
                   <a
-                    href={toTel(unit.phone)}
+                    href={toTel(unit.phone, unit.name)}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-diniz-red px-5 py-3 text-sm font-bold text-white hover:bg-red-700 transition-colors"
                   >
-                    Ligar agora
+                    Entrar em Contato
                     <Phone size={16} />
                   </a>
                 </div>
