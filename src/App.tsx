@@ -40,7 +40,7 @@ const UNITS = [
 const CONTACT_UNITS = [
   { name: "UNIDADE CENTRO", phone: "(47) 9259-7505" },
   { name: "UNIDADE VILA NOVA", phone: "(47) 99182-9311" },
-  { name: "UNIDADE MUELLER", phone: "(47) 9230-6742" },
+  { name: "UNIDADE ARAQUARI", phone: "(47) 99783-4452" },
   { name: "UNIDADE IRIRIÚ", phone: "(47) 99230-9911" },
 ];
 
