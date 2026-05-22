@@ -30,11 +30,11 @@ const BRANDS = [
 ];
 
 const UNITS = [
-  { name: "Centro (R. do Príncipe)", city: "Joinville", maps: "https://goo.gl/maps/example1" },
-  { name: "Vila Nova (R. XV de Novembro)", city: "Joinville", maps: "https://goo.gl/maps/example2" },
-  { name: "Shopping Muller (R. Visc. de Taunay)", city: "Joinville", maps: "https://goo.gl/maps/example3" },
-  { name: "Iririú", city: "Joinville", maps: "https://goo.gl/maps/example4" },
-  { name: "Itinga", city: "Araquari", maps: "https://goo.gl/maps/example5" },
+  { name: "Centro (R. do Príncipe)", city: "Joinville", maps: "https://maps.app.goo.gl/HSZvtmrb8TB5rYFk9" },
+  { name: "Vila Nova (R. XV de Novembro)", city: "Joinville", maps: "https://maps.app.goo.gl/yn7qrQJys7t8Gf4d7" },
+  { name: "Shopping Muller (R. Visc. de Taunay)", city: "Joinville", maps: "https://maps.app.goo.gl/K2rs7iX2vQCN1FyP9" },
+  { name: "Iririú", city: "Joinville", maps: "https://maps.app.goo.gl/NeP5EnWHYphUNJCQ8" },
+  { name: "Itinga", city: "Araquari", maps: "https://maps.app.goo.gl/PYwF8GWaGdUEMPBY9" },
 ];
 
 const CONTACT_UNITS = [
